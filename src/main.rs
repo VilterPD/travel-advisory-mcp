@@ -279,6 +279,8 @@ struct ListWarningItem {
 #[derive(Debug, Deserialize, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 struct GetWarningInput {
+    // Work around Ollama's rejection of boolean property schemas; remove once Ollama supports them.
+    #[schemars(extend("anyOf" = [{"type": "integer", "minimum": 0}, {"type": "string"}]))]
     content_id: Value,
     format: Option<ContentFormat>,
 }
